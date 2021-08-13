@@ -1,44 +1,31 @@
 <template>
-  <div>
-    <!-- <h1>Person One</h1>
-    <p>{{personOne.name}}-{{personOne.age}}</p>
-    <button @click="changeOne">Change One</button>
-
-    <h1>Person Two</h1>
-    <p>{{personTwo.name}}-{{personTwo.age}}</p>
-    <button @click="changeTwo">ChangeTwo</button> -->
-    <h1>UserOne-{{userOne}}</h1>
-    <h1>UserTwo-{{userTwo}}</h1>
+  <div class="home">
+    <input type="text" v-model="search">
+    <p>Search Item - {{search}}</p>
+    <div v-for="name in filteredNames" :key="name">
+      {{name}}
+    </div>
   </div>
 </template>
 
 <script>
-import { reactive, ref } from '@vue/reactivity'
+import { computed, ref } from '@vue/reactivity'
 export default {
   setup(){
-    // let personOne = ref({name:"kyawkyaw",age:30});
-    // let changeOne=()=>{
-    //   personOne.value.name="Change kyawKyaw"
-    // }
+    let search = ref("");
+    let names = ref(["aungaung","kyawkyaw","susu","mgmg"]);
 
-    // let personTwo =reactive({name:"MGMG",age:30});
-    // let changeTwo=()=>{
-    //   personTwo.name="change mgmg"
-    // }
+    let filteredNames=computed(()=>{
+      return names.value.filter(name=>{
+        return name.includes(search.value)
+      })
+    })
 
-    // return {personOne,changeOne,personTwo,changeTwo}
-
-    let userOne = ref("AKKK");
-    let userTwo = reactive("MGMG");
-    let changeOne=()=>{
-      userOne.value= "Change abc";
-    }
-
-    return {userOne,userTwo,changeOne}
+    return {names,search,filteredNames}
   }
 }
 </script>
 
 <style>
-  
+
 </style>
