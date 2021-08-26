@@ -17,32 +17,24 @@
 
 <script>
 import PostList from '../components/PostList'
-import { ref } from '@vue/reactivity'
+import getPosts from '../composables/getPosts'
+
 export default {
   components: { PostList },
   setup(){
-    
-    let posts= ref([]);
-    let error=ref("");
-
-    let load=async()=>{
-      try{
-
-        let response = await fetch("http://localhost:3000/posts")
-        if(response.status===404){
-          throw new Error("not found Url");
-        }
-        let datas = await response.json()
-          posts.value=datas
-      }catch(err){
-        // console.log(error.message)
-        error.value=err.message;
-      }
-    }
+    //composable function
+    let {posts,error,load}=getPosts()
 
     load();
     
-    return {posts,error}
+    return {posts,error};
+
+    //destructring
+    // let {name,age}={
+    //   name:"aung ko ko khant",
+    //   age: 19
+    // }
+    // console.log(age);
   }
 }
 </script>
